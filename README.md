@@ -8,7 +8,9 @@ Tested with a Canon DSLR, but it should work with any cameras with built-in shut
 * Self-timer
 * Intervalometer
 
-<p align="center">![Screenshot](https://github.com/CosmicMac/ESP8266-remote/raw/master/readme/screenshot.jpg)</p>
+<p align="center">
+![Screenshot](readme/screenshot.jpg)
+</p>
 
 ### Shopping list
 1. ESP8266 running a recent version of NodeMCU (I used `nodemcu_integer_0.9.6-dev_20150406`)
