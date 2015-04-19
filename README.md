@@ -8,9 +8,7 @@ Tested with a Canon DSLR, but it should work with any cameras with built-in shut
 * Self-timer
 * Intervalometer
 
-<p align="center">
 ![Screenshot](https://github.com/CosmicMac/ESP8266-remote/raw/master/readme/screenshot.jpg)
-</p>
 
 ### Shopping list
 1. ESP8266 running a recent version of NodeMCU (I used `nodemcu_integer_0.9.6-dev_20150406`)
@@ -28,13 +26,9 @@ Tested with a Canon DSLR, but it should work with any cameras with built-in shut
 * 4N25 `pin 4` to `ground wire` of the release cable
 * 4N25 `pin 5` to `shutter wire` of the release cable
 
-<p align="center">
 ![Wiring](https://github.com/CosmicMac/ESP8266-remote/raw/master/readme/wiring.jpg)
-</p>
 
-<p align="center">
 ![The thing](https://github.com/CosmicMac/ESP8266-remote/raw/master/readme/640.jpg)
-</p>
 
 ### 2DO
 * Wrap self adhesive velcro around the tablets tube and my tripod
