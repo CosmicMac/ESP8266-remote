@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESP Remote</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style type='text/css'>
+        body { font-family: sans-serif; color: darkslategray; margin: 0; }
+        .top { padding-top: 10px; float: left; height: 40px; text-align: center; }
+        .side { width: 40%; }
+        .center { width: 20%; }
+        #main { position: absolute; top: 80px; left: 10px; right: 10px; bottom: 75px; }
+        #options { position: absolute; height: 35px; line-height: 35px; bottom: 25px; left: 0; right: 0; }
+        #options div { float: left; width: 50%; text-align: center; }
+        #trigger { font-size: 2em; }
+        input, select { font-size: 1.1em; }
+        input[type=checkbox] { transform: scale(1.5); }
+        label { font-weight: bold; }
+        button {
+            width: 100%;
+            height: 100%;
+            font: bold 1.1em sans-serif;
+            border: 1px solid lightslategray;
+            border-radius: 20%;
+            color: darkslategray;
+            background: #eee radial-gradient(ellipse at center, #eee 0%, #ccc 100%);
+        }
+        #status {
+            position: absolute;
+            height: 25px;
+            line-height: 25px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            text-align: center;
+            background-color: lightslategray;
+            border-top: 1px solid gray;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top side">
+    <label for="timer">Self-timer</label><br><select id="timer" name="timer"></select>
+</div>
+
+<div class="top center">
+    <button id="reset">Reset</button>
+</div>
+
+<div class="top side">
+    <label for="interval">Intervalometer</label><br><select id="interval" name="interval"></select>
+</div>
+
+<div id="main">
+    <button id="trigger">Trigger</button>
+</div>
+
+<div id="options">
+    <div><label for="vibration">Vibration </label><input type="checkbox" id="vibration" name="vibration" value="1" checked="checked"></div>
+    <div><label for="sound">Sound </label><input type="checkbox" id="sound" name="sound" value="1" checked="checked"></div>
+</div>
+
+<div id="status">ESP remote v1.0</div>
+
+<script type="text/javascript">
+
+    var snd1 = new Audio("data:audio/x-wav;base64,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");
+    var snd2 = new Audio("data:audio/x-wav;base64,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");
+    var vibration = true;
+    var sound = true;
+    var t;
+
+    function beep(n) {
+        if (sound) {
+            if (n == 1)
+                snd1.play();
+            else
+                snd2.play();
+        }
+    }
+
+    function vibrate() {
+        if (vibration && "vibrate" in navigator) {
+            window.navigator.vibrate(200);
+        }
+    }
+
+    function espGet(paramsString) {
+
+        var params = {}, tokens, re = /[?&]?([^=]+)=([^&]*)/g;
+        while (tokens = re.exec(paramsString)) {
+            params[tokens[1]] = tokens[2];
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            var statusMsg = "Error";
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.status == "OK") {
+                    vibrate();
+                    if (params.action == "trigger" && params.timer != 0) {
+                        var s = params.timer - 1;
+                        beep(s-- > 3 ? 1 : 2);
+                        t = setInterval(function () {
+                            if(s == 0) {
+                                clearInterval(t);
+                            } else {
+                                beep(s-- > 3 ? 1 : 2);
+                            }
+                        }, 1000)
+                    }
+                    statusMsg = "Remaining heap size: " + resp.heap + " bytes";
+                }
+            }
+            document.getElementById("status").innerHTML = statusMsg;
+        };
+        xhr.open("GET", "http://10.10.10.10/?" + paramsString, true);
+        xhr.send();
+    }
+
+    document.getElementById("trigger")
+            .addEventListener("click", function () {
+                clearInterval(t);
+                var e, timer, interval;
+                e = document.getElementById("timer");
+                timer = e.options[e.selectedIndex].value;
+                e = document.getElementById("interval");
+                interval = e.options[e.selectedIndex].value;
+                espGet("action=trigger&timer=" + timer + "&interval=" + interval);
+            });
+
+    document.getElementById("reset")
+            .addEventListener("click", function () {
+                clearInterval(t);
+                document.getElementById("timer").value = 0;
+                document.getElementById("interval").value = 0;
+                espGet("action=reset");
+            });
+
+    document.getElementById("vibration")
+            .addEventListener("click", function () {
+                vibration = this.checked;
+            });
+
+    document.getElementById("sound")
+            .addEventListener("click", function () {
+                sound = this.checked;
+            });
+
+    function mkOptions(elId, lst) {
+        var select = document.getElementById(elId);
+        for (var idx in lst) {
+            select.options[select.options.length] = new Option(idx, lst[idx]);
+        }
+    }
+
+    mkOptions(
+            "timer",
+            {"None": 0, "2 s": 2, "5 s": 5, "10 s": 10, "20 s": 20, "30 s": 30, "1 mn": 60 }
+    );
+    mkOptions(
+            "interval",
+            { "None": 0, "5 s": 5, "10 s": 10, "20 s": 20, "40 s": 40, "1 mn": 60, "2 mn": 120, "5 mn": 300, "10 mn": 600, "20 mn": 1200, "40 mn": 2400, "1 h": 3600 }
+    );
+
+</script>
+</body>
+</html>
