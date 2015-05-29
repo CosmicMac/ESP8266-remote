@@ -1,5 +1,7 @@
 ## ESP8266-remote
 
+**EDIT 2015-05-29:** [Full instructable available](http://www.instructables.com/id/Trigger-your-DSLR-wirelessly-with-smartphone-and-E/)
+
 Trigger a camera from a smartphone connected to ESP8266 running NodeMCU (configured as access point).  
 Tested with a Canon DSLR, but it should work with any cameras with built-in shutter switch terminal (cf. http://www.doc-diy.net/photo/remote_pinout/).
 
