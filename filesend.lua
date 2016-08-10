@@ -26,16 +26,16 @@ File not found
 	end
 
 	local fSize = getFSize(fName);
-
+	local data = ""
 	if fOffset == 0 then
-		conn:send([[
+		data = [[
 HTTP/1.1 200 OK
 Server: ESP
 Content-Type: ]] .. fType .. "\r\n" .. [[
 Content-Length: ]] .. getFSize(fName) .. "\r\n" .. [[
 Connection: close
 
-]])
+]]
 	end
 
 	local CHUNK_SIZE = 1024
@@ -45,7 +45,8 @@ Connection: close
 	file.close()
 
 	if chunk then
-		conn:send(chunk)
+		data = data .. chunk
+		conn:send(data)
 	end
 
 	fOffset = fOffset + CHUNK_SIZE
